@@ -1,0 +1,23 @@
+{
+  "name": "Parolone 24",
+  "short_name": "Parolone 24",
+  "description": "Gioco quotidiano sulle parole più lunghe nei titoli de Il Sole 24 Ore.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1b0c05",
+  "theme_color": "#2b1409",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
