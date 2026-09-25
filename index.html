@@ -181,38 +181,54 @@ function renderLife(el,n){el.innerHTML='<b>Vite</b>'+[0,1,2].map(i=>`<span class
 
 function normalize(w){return w.toLocaleLowerCase("it-IT").normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
 
-function mutateOneLetter(word){
-  const letters="abcdefghijklmnopqrstuvwxyz";
-  let tries=0;
-  while(tries++<100){
-    const arr=[...word];
-    const i=Math.floor(Math.random()*arr.length);
-    const original=arr[i].toLowerCase();
-    let c=letters[Math.floor(Math.random()*letters.length)];
-    if(c===original) continue;
-    arr[i]=c;
-    const candidate=arr.join("");
-    if(candidate!==word) return candidate;
+function makeRealWordQuestion(pool,used){
+  const available=shuffle(pool.filter(w=>!used.has(w)));
+  // Prima prova parole quasi della stessa lunghezza: rende il colpo d'occhio difficile,
+  // senza usare finte variazioni della stessa parola.
+  for(const maxGap of [1,2,3]){
+    for(const answer of available){
+      const distractors=shuffle(available.filter(w=>
+        w!==answer && w.length<answer.length && (answer.length-w.length)<=maxGap
+      ));
+      if(distractors.length>=4){
+        const chosen=[answer,...distractors.slice(0,4)];
+        chosen.forEach(w=>used.add(w));
+        return {
+          answer:pretty(answer),
+          options:shuffle(chosen.map(pretty))
+        };
+      }
+    }
   }
-  return word.slice(0,-1)+(word.endsWith("a")?"e":"a");
+  return null;
 }
 
-function oneLetterOptions(answer){
-  const base=answer.toLowerCase();
-  const set=new Set([base]);
-  while(set.size<5){
-    let c=mutateOneLetter(base);
-    if(c.length===base.length) set.add(c);
-  }
-  return shuffle([...set].map(pretty));
-}
+function buildQuestions(words,count=5){
+  const pool=[...new Set(words.map(normalize))]
+    .filter(w=>/^[a-z]+$/.test(w) && w.length>=6 && w.length<=22 && !STOP.has(w));
 
-function makeQuestion(answer){
-  return {answer:pretty(answer.toLowerCase()),options:oneLetterOptions(answer)};
+  // Più tentativi perché ogni partita usi 25 parole diverse, quando il feed lo consente.
+  for(let attempt=0;attempt<40;attempt++){
+    const used=new Set(),out=[];
+    const mixed=shuffle(pool);
+    for(let i=0;i<count;i++){
+      const q=makeRealWordQuestion(mixed,used);
+      if(!q)break;
+      out.push(q);
+    }
+    if(out.length===count)return out;
+  }
+  return [];
 }
 
 function fallbackQuestions(){
-  return shuffle(FALLBACK).slice(0,5).map(makeQuestion);
+  let q=buildQuestions(FALLBACK,5);
+  if(q.length===5)return q;
+  // Ultima rete di sicurezza: può riutilizzare parole tra domande, ma mai dentro la stessa domanda.
+  return Array.from({length:5},()=>{
+    const used=new Set();
+    return makeRealWordQuestion(FALLBACK,used);
+  }).filter(Boolean);
 }
 
 function parseRSS(text){
@@ -243,24 +259,28 @@ function extractWords(titles){
   const out=[];
   for(const t of titles){
     const words=normalize(t).match(/[a-z]+/g)||[];
-    for(const w of words) if(w.length>=9 && w.length<=24 && !STOP.has(w)) out.push(w);
+    for(const w of words){
+      if(w.length>=6 && w.length<=22 && !STOP.has(w)) out.push(w);
+    }
   }
   return [...new Set(out)];
 }
 
 async function loadQuestions(){
   $("startBtn").disabled=true;
-  $("status").textContent="Cerco 5 parole casuali nei titoli del Sole 24 Ore…";
+  $("status").textContent="Pesco parole casuali dai titoli del Sole 24 Ore…";
   try{
     const settled=await Promise.allSettled(FEEDS.map(async u=>parseRSS(await fetchText(u))));
     const items=settled.filter(x=>x.status==="fulfilled").flatMap(x=>x.value);
     const words=extractWords(items.map(x=>x.title));
-    if(words.length<5) throw new Error("few");
-    questions=shuffle(words).slice(0,5).map(makeQuestion);
-    $("status").textContent="Pronte 5 parole nuove ✓";
+    let built=buildQuestions(words,5);
+    if(built.length<5) built=buildQuestions([...words,...FALLBACK],5);
+    if(built.length<5) throw new Error("few");
+    questions=built;
+    $("status").textContent="5 sfide nuove pronte ✓";
   }catch(e){
     questions=fallbackQuestions();
-    $("status").textContent="Feed non disponibile: uso 5 parole demo casuali";
+    $("status").textContent="Feed momentaneamente non disponibile: uso parole demo";
   }
   $("startBtn").disabled=false;
 }
@@ -299,7 +319,8 @@ function timeoutAnswer(){
     b.disabled=true;
   });
   renderLife($("life"),lives);
-  setTimeout(nextStep,650);
+  // A 3 secondi la domanda sparisce quasi subito: ritmo rapido, una vita persa.
+  setTimeout(nextStep,220);
 }
 
 function answer(opt,btn){
@@ -310,7 +331,7 @@ function answer(opt,btn){
     if(b.textContent===q.answer)b.classList.add("correct");b.disabled=true;
   });
   renderLife($("life"),lives);
-  setTimeout(nextStep,650);
+  setTimeout(nextStep,450);
 }
 
 function nextStep(){
