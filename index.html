@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#2b1409" />
+  <meta name="theme-color" content="#271006" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Parolone 24" />
@@ -12,415 +12,380 @@
   <title>Parolone 24</title>
   <style>
     :root{
-      --bg:#1b0c05;
-      --bg2:#4c2410;
-      --cream:#fff0cd;
-      --gold:#ffb21e;
-      --gold2:#ffcb61;
-      --ink:#241006;
-      --red:#ef4444;
-      --green:#2da56e;
-      --muted:rgba(255,240,205,.68);
-      --card:rgba(255,240,205,.96);
-      --shadow:0 20px 50px rgba(0,0,0,.28);
+      --cream:#fff1d2; --gold:#ffb01b; --gold2:#ffd36d; --ink:#241006;
+      --brown:#4e2410; --sky:#8fdcff; --red:#ee4b4b; --green:#34a86b;
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-    html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:var(--bg);color:var(--cream)}
+    html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
     body{
-      min-height:100svh;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(255,178,30,.18), transparent 34%),
-        radial-gradient(circle at 100% 25%, rgba(158,74,26,.22), transparent 32%),
-        linear-gradient(155deg,#1a0c05 0%,#4b2310 48%,#160a04 100%);
-      overflow-x:hidden;
+      color:var(--cream); min-height:100svh; overflow-x:hidden;
+      background:linear-gradient(#8fdcff 0 28%,#f3a34e 28% 53%,#8d3f1f 53% 100%);
     }
     button{font:inherit}
     .app{
-      width:min(100%,520px);
-      margin:0 auto;
-      min-height:100svh;
-      padding:calc(env(safe-area-inset-top) + 14px) 18px calc(env(safe-area-inset-bottom) + 20px);
-      display:flex;flex-direction:column;
+      width:min(100%,520px); min-height:100svh; margin:auto;
+      padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 18px);
+      background:
+        radial-gradient(ellipse at 18% 28%,rgba(255,255,255,.95) 0 7%,transparent 7.4%),
+        radial-gradient(ellipse at 31% 25%,rgba(255,255,255,.9) 0 5%,transparent 5.4%),
+        radial-gradient(ellipse at 84% 18%,rgba(255,255,255,.9) 0 6%,transparent 6.4%),
+        linear-gradient(to bottom,rgba(143,220,255,.96) 0 34%,rgba(238,156,69,.97) 34% 54%,rgba(72,30,13,.99) 54%);
     }
-    .screen{display:none;min-height:calc(100svh - 34px);flex-direction:column;animation:fade .24s ease}
-    .screen.active{display:flex}
-    @keyframes fade{from{opacity:.45;transform:translateY(6px)}to{opacity:1;transform:none}}
-    .brand{font-family:Georgia,serif;font-weight:900;font-size:46px;line-height:.95;text-align:center;letter-spacing:-1.5px;margin-top:18px}
-    .brand .n24{color:var(--gold)}
-    .subtitle{text-align:center;color:var(--muted);font-size:16px;font-weight:600;margin-top:10px}
-    .source{font-size:12px;color:rgba(255,240,205,.52);text-align:center;line-height:1.35;margin-top:10px}
-    .mascot-wrap{display:flex;justify-content:center;align-items:center;margin:18px 0 8px}
-    .mascot{
-      position:relative;width:220px;height:220px;
-      filter:drop-shadow(0 18px 22px rgba(0,0,0,.28));
-      transition:transform .25s ease;
+    .screen{display:none;min-height:calc(100svh - 30px);flex-direction:column}
+    .screen.active{display:flex;animation:fade .2s ease}
+    @keyframes fade{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+    .brand{font-family:Georgia,serif;font-weight:900;font-size:45px;line-height:1;text-align:center;color:#2d1208;margin-top:10px}
+    .brand b{color:#f3a400}
+    .subtitle{text-align:center;color:#2d1208;font-weight:750;margin-top:8px}
+    .desert-card{
+      margin:16px 0 8px;border-radius:28px;overflow:hidden;position:relative;min-height:330px;
+      box-shadow:0 20px 45px rgba(0,0,0,.25); border:2px solid rgba(255,255,255,.3);
+      background:
+        linear-gradient(170deg,transparent 0 47%,#d85e32 48% 59%,transparent 60%),
+        linear-gradient(15deg,transparent 0 52%,#b4472d 53% 65%,transparent 66%),
+        linear-gradient(#8edbff 0 55%,#eab04e 55% 100%);
     }
-    .mascot.small{width:148px;height:148px;margin-top:4px}
-    .ear{position:absolute;top:2px;width:52px;height:100px;background:#9c5728;border:5px solid #4c2714;border-radius:80% 18% 72% 24%;transform-origin:bottom center;z-index:1}
-    .ear:after{content:"";position:absolute;inset:12px 12px 22px;background:#e7ad7e;border-radius:70% 16% 70% 22%}
-    .ear.left{left:36px;transform:rotate(-13deg)}
-    .ear.right{right:36px;transform:scaleX(-1) rotate(-13deg)}
-    .head{position:absolute;left:33px;top:56px;width:154px;height:139px;background:#a96532;border:5px solid #4c2714;border-radius:46% 46% 48% 48%;z-index:3}
-    .cheek{position:absolute;top:73px;width:53px;height:48px;background:#f0cf9d;border-radius:50%;z-index:4}
-    .cheek.left{left:10px}.cheek.right{right:10px}
-    .muzzle{position:absolute;left:48px;top:84px;width:92px;height:51px;background:#f2d5a8;border-radius:55% 48% 58% 48%;transform:rotate(-2deg);z-index:5}
-    .nose{position:absolute;right:-6px;top:7px;width:32px;height:28px;background:#15110e;border-radius:50%;box-shadow:inset 5px 3px 0 rgba(255,255,255,.15)}
-    .eye{position:absolute;top:34px;width:48px;height:61px;background:#ffd94f;border:4px solid #4c2714;border-radius:50%;z-index:6}
-    .eye.left{left:25px;transform:rotate(-5deg)}.eye.right{right:25px;transform:rotate(5deg)}
-    .pupil{position:absolute;width:8px;height:13px;background:#20130b;border-radius:50%;left:22px;top:26px}
-    .brow{position:absolute;top:25px;width:44px;height:10px;background:#3f2415;border-radius:50%;z-index:7}
-    .brow.left{left:22px;transform:rotate(-13deg)}.brow.right{right:22px;transform:rotate(13deg)}
-    .smile{position:absolute;left:56px;top:108px;width:68px;height:31px;border-bottom:7px solid #4b2413;border-radius:0 0 70% 70%;z-index:8;transform:rotate(2deg)}
-    .tooth{position:absolute;width:10px;height:12px;background:white;clip-path:polygon(0 0,100% 0,50% 100%);z-index:9;top:128px}
-    .tooth.t1{left:78px}.tooth.t2{left:99px}
-    .body{position:absolute;left:70px;top:171px;width:80px;height:45px;background:#8f522b;border:5px solid #4c2714;border-radius:46% 46% 20% 20%;z-index:2}
-    .mascot.thinking .smile{width:44px;left:72px;border-bottom-width:4px;transform:none}
-    .mascot.thinking .brow.left{transform:rotate(12deg)} .mascot.thinking .brow.right{transform:rotate(-12deg)}
-    .mascot.gameover{transform:rotate(8deg) translateY(8px);opacity:.92}
-    .mascot.gameover .pupil{display:none}
-    .mascot.gameover .eye:after{content:"×";position:absolute;inset:-3px 0 0;text-align:center;font-size:43px;line-height:55px;color:#3e2414;font-weight:900}
-    .mascot.gameover .smile{border:0;border-top:6px solid #4b2413;border-radius:70% 70% 0 0;top:125px}
-    .tagline{font-size:20px;font-weight:750;line-height:1.28;text-align:center;margin:4px auto 16px;max-width:380px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
-    .stat{background:var(--card);color:var(--ink);border-radius:20px;padding:14px 8px;text-align:center;box-shadow:var(--shadow)}
-    .stat .ico{font-size:20px}.stat strong{display:block;font-size:24px;margin-top:4px}.stat span{font-size:11px;font-weight:650}
-    .primary{border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:var(--ink);font-weight:850;border-radius:999px;padding:18px 22px;width:100%;font-size:20px;box-shadow:0 14px 28px rgba(255,178,30,.16);margin-top:16px}
-    .primary:active{transform:scale(.985)}
-    .primary:disabled{opacity:.5}
-    .secondary{border:0;background:transparent;color:var(--cream);font-weight:700;padding:12px;margin-top:4px}
-    .status{text-align:center;color:var(--muted);font-size:13px;min-height:18px;margin-top:12px}
-    .topbar{display:grid;grid-template-columns:46px 1fr 46px;align-items:center;margin-top:6px}
-    .topbar h2{font-family:Georgia,serif;text-align:center;margin:0;font-size:20px}
-    .round{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:var(--cream);font-size:23px}
-    .life{display:flex;justify-content:center;align-items:center;gap:11px;background:rgba(24,10,5,.72);border:1px solid rgba(255,255,255,.08);border-radius:999px;width:max-content;max-width:100%;margin:3px auto 13px;padding:10px 17px;font-weight:800}
-    .heart{font-size:24px;line-height:1}.heart.off{filter:grayscale(1);opacity:.28}
-    .question-card{background:var(--card);color:var(--ink);border-radius:28px;padding:20px 16px 18px;box-shadow:var(--shadow)}
-    .question-card h1{font-family:Georgia,serif;text-align:center;font-size:35px;line-height:1.02;margin:0 0 18px}
-    .option{display:block;width:100%;margin:10px 0;border:1px solid rgba(40,16,6,.16);background:rgba(255,255,255,.53);color:var(--ink);font-weight:820;border-radius:999px;min-height:53px;padding:10px 14px;font-size:18px}
-    .option.correct{background:rgba(45,165,110,.28);border-color:rgba(45,165,110,.65)}
-    .option.wrong{background:rgba(239,68,68,.22);border-color:rgba(239,68,68,.62)}
-    .result-title{font-family:Georgia,serif;font-size:48px;line-height:1;text-align:center;margin:70px 0 8px}
-    .result-sub{text-align:center;font-size:19px;font-weight:700;color:var(--muted);margin-bottom:5px}
-    .result-note{text-align:center;font-weight:700;color:var(--cream);line-height:1.35;margin:10px 14px 0}
-    .tiny{font-size:11px;color:rgba(255,240,205,.48);text-align:center;margin-top:10px}
+    .sun{position:absolute;right:28px;top:24px;width:64px;height:64px;border-radius:50%;background:#ffe56c;box-shadow:0 0 35px rgba(255,229,108,.65)}
+    .mesa{position:absolute;left:-20px;bottom:88px;width:210px;height:80px;background:#bd5736;clip-path:polygon(0 100%,15% 42%,28% 42%,36% 10%,67% 10%,73% 49%,100% 49%,100% 100%)}
+    .mesa.m2{left:auto;right:-8px;width:170px;height:95px;background:#ce6b3d;transform:scaleX(-1)}
+    .ground{position:absolute;left:0;right:0;bottom:0;height:110px;background:#e8ad4b}
+    .mailbox{
+      position:absolute;right:26px;bottom:86px;width:128px;height:82px;background:#f9f4e9;border:4px solid #2e1a11;border-radius:42px 42px 10px 10px;
+    }
+    .mailbox:after{content:"COYOTE";position:absolute;left:22px;top:32px;font-family:Georgia,serif;font-weight:900;color:#1f120c;font-size:19px}
+    .maildoor{position:absolute;right:-2px;bottom:-55px;width:82px;height:54px;background:#f9f4e9;border:4px solid #2e1a11;border-top:0;border-radius:0 0 14px 14px;transform:skewY(-8deg)}
+    .post{position:absolute;right:79px;bottom:-100px;width:21px;height:104px;background:#4b2a19}
+    .flag{position:absolute;right:4px;top:-52px;width:8px;height:58px;background:#2e1a11}
+    .flag:after{content:"";position:absolute;left:0;top:0;width:36px;height:25px;background:#e22a26;border:3px solid #2e1a11;border-radius:3px}
+    .coyote{
+      position:absolute;left:24px;bottom:45px;width:205px;height:245px;filter:drop-shadow(0 10px 7px rgba(0,0,0,.25));
+    }
+    .ear{position:absolute;top:1px;width:50px;height:98px;background:#a65e30;border:5px solid #412313;border-radius:75% 15% 70% 20%;z-index:1}
+    .ear:after{content:"";position:absolute;inset:12px 10px 22px;background:#efac8a;border-radius:70% 15% 70% 20%}
+    .ear.l{left:43px;transform:rotate(-12deg)} .ear.r{right:40px;transform:scaleX(-1) rotate(-12deg)}
+    .head{position:absolute;left:40px;top:58px;width:145px;height:130px;background:#a65e30;border:5px solid #412313;border-radius:47%;z-index:3}
+    .cream{position:absolute;left:36px;top:69px;width:95px;height:52px;background:#f4d2a3;border-radius:52%;z-index:5}
+    .nose{position:absolute;right:-13px;top:9px;width:34px;height:29px;border-radius:50%;background:#111;box-shadow:inset 6px 4px 0 rgba(255,255,255,.15)}
+    .eye{position:absolute;top:29px;width:44px;height:58px;border-radius:50%;background:#ffe44e;border:4px solid #412313;z-index:6}
+    .eye.l{left:25px}.eye.r{right:24px}.pupil{position:absolute;left:19px;top:24px;width:8px;height:13px;background:#18100c;border-radius:50%}
+    .brow{position:absolute;top:22px;width:40px;height:8px;border-radius:50%;background:#342015;z-index:7}
+    .brow.l{left:20px;transform:rotate(-9deg)} .brow.r{right:20px;transform:rotate(9deg)}
+    .smile{position:absolute;left:47px;top:94px;width:75px;height:28px;border-bottom:7px solid #4a2313;border-radius:0 0 70% 70%;z-index:8}
+    .body{position:absolute;left:70px;top:173px;width:72px;height:70px;background:#9a562d;border:5px solid #412313;border-radius:45% 45% 24% 24%;z-index:2}
+    .chest{position:absolute;left:19px;top:5px;width:33px;height:58px;background:#f1ce9a;border-radius:50%;z-index:3}
+    .arm{position:absolute;width:65px;height:17px;background:#9a562d;border:4px solid #412313;border-radius:20px;z-index:4}
+    .arm.left{left:29px;top:184px;transform:rotate(125deg)} .arm.right{right:3px;top:175px;transform:rotate(8deg)}
+    .leg{position:absolute;width:18px;height:70px;background:#9a562d;border:4px solid #412313;border-radius:20px;top:211px;z-index:1}
+    .leg.l{left:72px;transform:rotate(11deg)} .leg.r{left:118px;transform:rotate(-8deg)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}
+    .stat{background:rgba(255,243,216,.96);color:#271006;border-radius:18px;padding:10px 5px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+    .stat strong{display:block;font-size:22px}.stat span{font-size:10px;font-weight:750}.stat .ico{font-size:19px}
+    .primary{border:0;width:100%;border-radius:999px;background:linear-gradient(var(--gold2),var(--gold));color:#251006;font-size:20px;font-weight:900;padding:17px 20px;box-shadow:0 12px 25px rgba(0,0,0,.18)}
+    .secondary{border:0;background:transparent;color:#fff1d2;padding:11px;font-weight:750}
+    .status{text-align:center;font-size:12px;color:rgba(255,241,210,.8);min-height:16px;margin:9px 0}
+    .topbar{display:grid;grid-template-columns:44px 1fr 78px;align-items:center;color:#fff1d2;margin-top:5px}
+    .topbar h2{text-align:center;font-family:Georgia,serif;font-size:19px;margin:0}
+    .round{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(60,24,8,.45);color:#fff1d2;font-size:22px}
+    .timer{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900;color:#fff1d2;background:#2d150a;border:6px solid var(--gold);justify-self:end}
+    .timer.danger{border-color:#ef4444;color:#fff}
+    .quiz-coyote{position:relative;margin:2px auto -4px;width:130px;height:120px;transform:scale(.65);transform-origin:center bottom}
+    .life{margin:0 auto 11px;background:rgba(43,17,6,.84);border-radius:999px;padding:9px 16px;display:flex;gap:10px;align-items:center;width:max-content;font-weight:800}
+    .heart{font-size:23px}.heart.off{opacity:.25;filter:grayscale(1)}
+    .question{background:rgba(255,242,211,.97);color:#241006;border-radius:28px;padding:17px 15px;box-shadow:0 16px 35px rgba(0,0,0,.25)}
+    .question h1{text-align:center;font-family:Georgia,serif;font-size:31px;line-height:1.05;margin:0 0 13px}
+    .option{width:100%;border:1px solid rgba(34,16,6,.18);background:rgba(255,255,255,.58);color:#241006;border-radius:999px;min-height:50px;margin:7px 0;padding:8px 11px;font-size:17px;font-weight:850}
+    .option.correct{background:rgba(52,168,107,.28);border-color:#34a86b}
+    .option.wrong{background:rgba(238,75,75,.22);border-color:#ee4b4b}
+    .option:disabled{opacity:1}
+    .result-title{font-family:Georgia,serif;text-align:center;font-size:48px;margin:58px 0 6px}
+    .result-sub{text-align:center;font-size:20px;font-weight:800;color:rgba(255,241,210,.85)}
+    .result-coyote{position:relative;height:270px;transform:rotate(85deg) scale(.86);margin:0 auto -10px;width:205px}
+    .result-note{text-align:center;font-weight:800;margin:8px 14px 18px;line-height:1.35}
     .spacer{flex:1}
-    .debug{display:none}
-    @media (max-height:720px){
-      .brand{font-size:40px;margin-top:6px}
-      .mascot{width:175px;height:175px;transform:scale(.8);margin:-12px}
-      .mascot.small{width:125px;height:125px;transform:scale(.72);margin:-14px auto}
-      .stats .stat{padding:9px 6px}
-      .question-card h1{font-size:29px}
-      .option{min-height:46px;margin:7px 0}
+    .tiny{text-align:center;font-size:10px;color:rgba(255,241,210,.55);margin-top:7px}
+    @media(max-height:730px){
+      .desert-card{min-height:275px}.coyote{transform:scale(.83);transform-origin:left bottom}
+      .stats{margin:5px 0}.stat{padding:7px 4px}.result-title{margin-top:30px}
+      .question h1{font-size:27px}.option{min-height:44px;margin:5px 0}
     }
   </style>
 </head>
 <body>
-  <main class="app">
-    <section id="home" class="screen active">
-      <div class="brand">Parolone <span class="n24">24</span></div>
-      <div class="subtitle">Le parole più lunghe del giorno</div>
+<main class="app">
 
-      <div class="mascot-wrap">
-        <div class="mascot happy" aria-label="Coyote sorridente">
-          <div class="ear left"></div><div class="ear right"></div>
-          <div class="body"></div>
-          <div class="head">
-            <div class="cheek left"></div><div class="cheek right"></div>
-            <div class="eye left"><div class="pupil"></div></div>
-            <div class="eye right"><div class="pupil"></div></div>
-            <div class="brow left"></div><div class="brow right"></div>
-            <div class="muzzle"><div class="nose"></div></div>
-            <div class="smile"></div><div class="tooth t1"></div><div class="tooth t2"></div>
-          </div>
-        </div>
+<section id="home" class="screen active">
+  <div class="brand">Parolone <b>24</b></div>
+  <div class="subtitle">Le parole più lunghe del giorno</div>
+
+  <div class="desert-card">
+    <div class="sun"></div><div class="mesa"></div><div class="mesa m2"></div><div class="ground"></div>
+    <div class="mailbox"><div class="maildoor"></div><div class="post"></div><div class="flag"></div></div>
+    <div class="coyote">
+      <div class="ear l"></div><div class="ear r"></div>
+      <div class="head">
+        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
+        <div class="brow l"></div><div class="brow r"></div>
+        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
       </div>
+      <div class="body"><div class="chest"></div></div><div class="arm left"></div><div class="arm right"></div>
+      <div class="leg l"></div><div class="leg r"></div>
+    </div>
+  </div>
 
-      <div class="tagline">Il coyote oggi è molto sorridente.<br>Vediamo quanto dura.</div>
+  <div class="stats">
+    <div class="stat"><div class="ico">📰</div><strong>5</strong><span>domande</span></div>
+    <div class="stat"><div class="ico">☷</div><strong>5</strong><span>opzioni</span></div>
+    <div class="stat"><div class="ico">⏱️</div><strong>3</strong><span>secondi</span></div>
+    <div class="stat"><div class="ico">❤️</div><strong>⅓</strong><span>vita/errore</span></div>
+  </div>
 
-      <div class="stats">
-        <div class="stat"><div class="ico">📰</div><strong>3</strong><span>domande</span></div>
-        <div class="stat"><div class="ico">☷</div><strong>5</strong><span>opzioni</span></div>
-        <div class="stat"><div class="ico">❤️</div><strong>⅓</strong><span>vita/errore</span></div>
-      </div>
+  <div class="spacer"></div>
+  <button id="startBtn" class="primary" disabled>Inizia la sfida →</button>
+  <div id="status" class="status">Cerco parole casuali nei titoli del Sole 24 Ore…</div>
+  <button id="refreshBtn" class="secondary">Cambia parole</button>
+  <div class="tiny">Prototipo personale non ufficiale. Fonte: titoli dei feed RSS pubblici de Il Sole 24 Ore.</div>
+</section>
 
-      <div class="spacer"></div>
-      <button id="startBtn" class="primary" disabled>Inizia la sfida →</button>
-      <div id="loadStatus" class="status">Cerco le parole del giorno…</div>
-      <button id="refreshBtn" class="secondary">Aggiorna parole</button>
-      <div class="source">Fonte: titoli dei feed RSS pubblici de Il Sole 24 Ore. L'app non è affiliata né ufficiale.</div>
-    </section>
+<section id="quiz" class="screen">
+  <div class="topbar">
+    <button id="backBtn" class="round">‹</button>
+    <h2 id="qnum">Domanda 1 di 5</h2>
+    <div id="timer" class="timer">3.0</div>
+  </div>
 
-    <section id="quiz" class="screen">
-      <div class="topbar">
-        <button id="backBtn" class="round">‹</button>
-        <h2 id="questionNumber">Domanda 1 di 3</h2>
-        <span></span>
-      </div>
+  <div class="quiz-coyote">
+    <div class="coyote">
+      <div class="ear l"></div><div class="ear r"></div>
+      <div class="head">
+        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
+        <div class="brow l"></div><div class="brow r"></div>
+        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
+      </div><div class="body"><div class="chest"></div></div>
+    </div>
+  </div>
 
-      <div class="mascot-wrap">
-        <div class="mascot small thinking">
-          <div class="ear left"></div><div class="ear right"></div>
-          <div class="body"></div>
-          <div class="head">
-            <div class="cheek left"></div><div class="cheek right"></div>
-            <div class="eye left"><div class="pupil"></div></div>
-            <div class="eye right"><div class="pupil"></div></div>
-            <div class="brow left"></div><div class="brow right"></div>
-            <div class="muzzle"><div class="nose"></div></div>
-            <div class="smile"></div><div class="tooth t1"></div><div class="tooth t2"></div>
-          </div>
-        </div>
-      </div>
+  <div id="life" class="life"></div>
+  <div class="question">
+    <h1>Qual è la parola<br>più lunga?</h1>
+    <div id="options"></div>
+  </div>
+  <div class="spacer"></div>
+</section>
 
-      <div id="life" class="life"></div>
+<section id="result" class="screen">
+  <div id="resultTitle" class="result-title">Game Over</div>
+  <div id="resultSub" class="result-sub"></div>
 
-      <div class="question-card">
-        <h1>Qual è la parola<br>più lunga?</h1>
-        <div id="options"></div>
-      </div>
-      <div class="spacer"></div>
-    </section>
+  <div class="result-coyote">
+    <div class="coyote">
+      <div class="ear l"></div><div class="ear r"></div>
+      <div class="head">
+        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
+        <div class="brow l"></div><div class="brow r"></div>
+        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
+      </div><div class="body"><div class="chest"></div></div>
+    </div>
+  </div>
 
-    <section id="result" class="screen">
-      <div id="resultTitle" class="result-title">Game Over</div>
-      <div id="resultSub" class="result-sub">Hai sbagliato tutte e 3 le risposte</div>
+  <div id="lifeResult" class="life"></div>
+  <div id="resultNote" class="result-note"></div>
+  <div class="spacer"></div>
+  <button id="retryBtn" class="primary">↻ Riprova con altre parole</button>
+  <button id="homeBtn" class="secondary">Torna alla home</button>
+</section>
 
-      <div class="mascot-wrap">
-        <div id="resultMascot" class="mascot gameover">
-          <div class="ear left"></div><div class="ear right"></div>
-          <div class="body"></div>
-          <div class="head">
-            <div class="cheek left"></div><div class="cheek right"></div>
-            <div class="eye left"><div class="pupil"></div></div>
-            <div class="eye right"><div class="pupil"></div></div>
-            <div class="brow left"></div><div class="brow right"></div>
-            <div class="muzzle"><div class="nose"></div></div>
-            <div class="smile"></div><div class="tooth t1"></div><div class="tooth t2"></div>
-          </div>
-        </div>
-      </div>
+</main>
 
-      <div id="lifeResult" class="life"></div>
-      <div id="resultNote" class="result-note"></div>
-      <div class="spacer"></div>
-      <button id="retryBtn" class="primary">↻ Riprova</button>
-      <button id="homeBtn" class="secondary">Torna alla home</button>
-    </section>
-  </main>
+<script>
+const FEEDS=[
+ "https://www.ilsole24ore.com/rss/italia.xml",
+ "https://www.ilsole24ore.com/rss/mondo.xml",
+ "https://www.ilsole24ore.com/rss/economia.xml",
+ "https://www.ilsole24ore.com/rss/finanza.xml",
+ "https://www.ilsole24ore.com/rss/tecnologia.xml"
+];
 
-  <script>
-    const feeds = [
-      "https://www.ilsole24ore.com/rss/italia.xml",
-      "https://www.ilsole24ore.com/rss/mondo.xml",
-      "https://www.ilsole24ore.com/rss/economia.xml",
-      "https://www.ilsole24ore.com/rss/finanza.xml",
-      "https://www.ilsole24ore.com/rss/tecnologia.xml"
-    ];
+const FALLBACK=[
+ "internazionalizzazione","decarbonizzazione","ricapitalizzazione","regolamentazione",
+ "digitalizzazione","industrializzazione","infrastrutturazione","riorganizzazione",
+ "sottocapitalizzazione","specializzazione","razionalizzazione","liberalizzazione",
+ "globalizzazione","privatizzazione","commercializzazione","modernizzazione",
+ "ristrutturazione","programmazione","diversificazione","sostenibilita",
+ "competitivita","produttivita","obbligazionario","macroeconomia","geopolitica"
+];
 
-    const fallbackWords = [
-      "internazionalizzazione","ricapitalizzazione","decarbonizzazione",
-      "regolamentazione","digitalizzazione","sostenibilità","macroeconomia",
-      "obbligazione","investimenti","produttività","esportazioni",
-      "finanziamento","tecnologia","geopolitica","infrastrutture"
-    ];
+const STOP=new Set(["della","delle","dello","degli","dalla","dalle","dallo","dagli","nella","nelle","nello","negli","sulla","sulle","sullo","sugli","anche","come","sono","dopo","prima","contro","senza","verso","questo","questa","questi","queste","quello","quella","quelli","perche","mentre","dove","quando","oltre","ancora","molto","tutti","tutte","nuovo","nuova","anni","oggi","ieri","domani","italia","italiano","italiana","sole","euro","milioni","miliardi","secondo","parte","primo"]);
 
-    const stopWords = new Set([
-      "della","delle","dello","degli","dalla","dalle","dallo","dagli",
-      "nella","nelle","nello","negli","sulla","sulle","sullo","sugli",
-      "anche","come","sono","dopo","prima","contro","senza","verso",
-      "questo","questa","questi","queste","quello","quella","quelli",
-      "perché","mentre","dove","quando","oltre","ancora","molto",
-      "tutti","tutte","nuovo","nuova","anni","oggi","ieri","domani",
-      "italia","italiano","italiana","sole","euro","milioni","miliardi",
-      "secondo","parte","primo","nelle","delle"
-    ]);
+let questions=[],current=0,lives=3,locked=false,timerId=null,deadline=0;
 
-    let questions = [];
-    let current = 0;
-    let lives = 3;
-    let locked = false;
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pretty(w){return w.charAt(0).toUpperCase()+w.slice(1)}
+function renderLife(el,n){el.innerHTML='<b>Vite</b>'+[0,1,2].map(i=>`<span class="heart ${i<n?'':'off'}">♥</span>`).join('')}
 
-    const $ = id => document.getElementById(id);
+function normalize(w){return w.toLocaleLowerCase("it-IT").normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
 
-    function show(id){
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      $(id).classList.add("active");
-      window.scrollTo({top:0,behavior:"instant"});
-    }
+function mutateOneLetter(word){
+  const letters="abcdefghijklmnopqrstuvwxyz";
+  let tries=0;
+  while(tries++<100){
+    const arr=[...word];
+    const i=Math.floor(Math.random()*arr.length);
+    const original=arr[i].toLowerCase();
+    let c=letters[Math.floor(Math.random()*letters.length)];
+    if(c===original) continue;
+    arr[i]=c;
+    const candidate=arr.join("");
+    if(candidate!==word) return candidate;
+  }
+  return word.slice(0,-1)+(word.endsWith("a")?"e":"a");
+}
 
-    function pretty(w){
-      return w ? w.charAt(0).toUpperCase() + w.slice(1) : w;
-    }
+function oneLetterOptions(answer){
+  const base=answer.toLowerCase();
+  const set=new Set([base]);
+  while(set.size<5){
+    let c=mutateOneLetter(base);
+    if(c.length===base.length) set.add(c);
+  }
+  return shuffle([...set].map(pretty));
+}
 
-    function shuffle(a){
-      const arr=[...a];
-      for(let i=arr.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [arr[i],arr[j]]=[arr[j],arr[i]];
-      }
-      return arr;
-    }
+function makeQuestion(answer){
+  return {answer:pretty(answer.toLowerCase()),options:oneLetterOptions(answer)};
+}
 
-    function renderLife(target, value){
-      target.innerHTML = `<span>Vita</span>` +
-        [0,1,2].map(i => `<span class="heart ${i < value ? "" : "off"}">♥</span>`).join("");
-    }
+function fallbackQuestions(){
+  return shuffle(FALLBACK).slice(0,5).map(makeQuestion);
+}
 
-    function fallbackQuestions(){
-      return [
-        makeQuestion("internazionalizzazione"),
-        makeQuestion("ricapitalizzazione"),
-        makeQuestion("decarbonizzazione")
-      ];
-    }
+function parseRSS(text){
+  const doc=new DOMParser().parseFromString(text,"text/xml");
+  if(doc.querySelector("parsererror")) throw new Error("rss");
+  return [...doc.querySelectorAll("item")].map(i=>({
+    title:i.querySelector("title")?.textContent?.trim()||"",
+    date:i.querySelector("pubDate")?.textContent?.trim()||""
+  })).filter(x=>x.title);
+}
 
-    function makeQuestion(answer, pool=fallbackWords){
-      const lower = answer.toLowerCase();
-      const distractors = shuffle(pool.filter(w => w.toLowerCase() !== lower && w.length < answer.length)).slice(0,4);
-      const backup = shuffle(fallbackWords.filter(w => w.toLowerCase() !== lower && w.length < answer.length && !distractors.includes(w)));
-      while(distractors.length < 4 && backup.length) distractors.push(backup.shift());
-      return {answer:pretty(answer), options:shuffle([pretty(answer),...distractors.slice(0,4).map(pretty)])};
-    }
+async function fetchText(url){
+  const attempts=[url,`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`];
+  let e;
+  for(const endpoint of attempts){
+    try{
+      const c=new AbortController(),t=setTimeout(()=>c.abort(),6500);
+      const r=await fetch(endpoint,{cache:"no-store",signal:c.signal});
+      clearTimeout(t);
+      if(r.ok)return await r.text();
+      e=new Error("http");
+    }catch(err){e=err}
+  }
+  throw e||new Error("feed");
+}
 
-    function extractWords(titles){
-      const words = [];
-      for(const title of titles){
-        const found = title.toLocaleLowerCase("it-IT").match(/[a-zàèéìòóù]+/gi) || [];
-        for(const w of found){
-          if(w.length >= 8 && !stopWords.has(w)) words.push(w);
-        }
-      }
-      return [...new Set(words)].sort((a,b)=> b.length-a.length || a.localeCompare(b,"it"));
-    }
+function extractWords(titles){
+  const out=[];
+  for(const t of titles){
+    const words=normalize(t).match(/[a-z]+/g)||[];
+    for(const w of words) if(w.length>=9 && w.length<=24 && !STOP.has(w)) out.push(w);
+  }
+  return [...new Set(out)];
+}
 
-    function parseRSS(xmlText){
-      const doc = new DOMParser().parseFromString(xmlText,"text/xml");
-      if(doc.querySelector("parsererror")) throw new Error("RSS non valido");
-      return [...doc.querySelectorAll("item")].map(item => ({
-        title: item.querySelector("title")?.textContent?.trim() || "",
-        date: item.querySelector("pubDate")?.textContent?.trim() || item.querySelector("date")?.textContent?.trim() || ""
-      })).filter(x=>x.title);
-    }
+async function loadQuestions(){
+  $("startBtn").disabled=true;
+  $("status").textContent="Cerco 5 parole casuali nei titoli del Sole 24 Ore…";
+  try{
+    const settled=await Promise.allSettled(FEEDS.map(async u=>parseRSS(await fetchText(u))));
+    const items=settled.filter(x=>x.status==="fulfilled").flatMap(x=>x.value);
+    const words=extractWords(items.map(x=>x.title));
+    if(words.length<5) throw new Error("few");
+    questions=shuffle(words).slice(0,5).map(makeQuestion);
+    $("status").textContent="Pronte 5 parole nuove ✓";
+  }catch(e){
+    questions=fallbackQuestions();
+    $("status").textContent="Feed non disponibile: uso 5 parole demo casuali";
+  }
+  $("startBtn").disabled=false;
+}
 
-    async function fetchText(url){
-      const attempts = [
-        url,
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
-      ];
-      let lastErr;
-      for(const endpoint of attempts){
-        try{
-          const c = new AbortController();
-          const timer = setTimeout(()=>c.abort(),7000);
-          const r = await fetch(endpoint,{cache:"no-store",signal:c.signal});
-          clearTimeout(timer);
-          if(r.ok) return await r.text();
-          lastErr = new Error(`HTTP ${r.status}`);
-        }catch(e){ lastErr=e; }
-      }
-      throw lastErr || new Error("Feed non raggiungibile");
-    }
+function startGame(){
+  clearInterval(timerId);current=0;lives=3;locked=false;show("quiz");renderQuestion();
+}
 
-    function isTodayRome(dateText){
-      if(!dateText) return false;
-      const d = new Date(dateText);
-      if(Number.isNaN(d.getTime())) return false;
-      const fmt = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit"});
-      return fmt.format(d) === fmt.format(new Date());
-    }
+function renderQuestion(){
+  clearInterval(timerId);locked=false;
+  $("qnum").textContent=`Domanda ${current+1} di 5`;
+  renderLife($("life"),lives);
+  const q=questions[current];
+  $("options").innerHTML="";
+  q.options.forEach(opt=>{
+    const b=document.createElement("button");
+    b.className="option";b.textContent=opt;b.onclick=()=>answer(opt,b,false);$("options").appendChild(b);
+  });
+  deadline=performance.now()+3000;
+  updateTimer();
+  timerId=setInterval(updateTimer,50);
+}
 
-    async function loadDailyWords(){
-      $("startBtn").disabled = true;
-      $("loadStatus").textContent = "Cerco le parole del giorno…";
-      try{
-        const settled = await Promise.allSettled(feeds.map(async u => parseRSS(await fetchText(u))));
-        const items = settled.filter(x=>x.status==="fulfilled").flatMap(x=>x.value);
-        if(!items.length) throw new Error("Nessun feed disponibile");
-        const today = items.filter(x=>isTodayRome(x.date));
-        const titles = (today.length >= 8 ? today : items).map(x=>x.title);
-        const words = extractWords(titles);
-        if(words.length < 10) throw new Error("Poche parole");
-        const targets = words.slice(0,3);
-        questions = targets.map(t=>makeQuestion(t,words)).filter(q=>q.options.length===5);
-        if(questions.length !== 3) throw new Error("Domande insufficienti");
-        $("loadStatus").textContent = "Parole aggiornate per oggi ✓";
-      }catch(e){
-        questions = fallbackQuestions();
-        $("loadStatus").textContent = "Feed non disponibile: uso la sfida demo";
-      }finally{
-        $("startBtn").disabled = false;
-      }
-    }
+function updateTimer(){
+  const remaining=Math.max(0,deadline-performance.now());
+  $("timer").textContent=(remaining/1000).toFixed(1);
+  $("timer").classList.toggle("danger",remaining<1000);
+  if(remaining<=0){clearInterval(timerId);timeoutAnswer()}
+}
 
-    function start(){
-      current=0;lives=3;locked=false;
-      show("quiz");
-      renderQuestion();
-    }
+function timeoutAnswer(){
+  if(locked)return; locked=true; lives=Math.max(0,lives-1);
+  const q=questions[current];
+  [...document.querySelectorAll(".option")].forEach(b=>{
+    if(b.textContent===q.answer)b.classList.add("correct");
+    b.disabled=true;
+  });
+  renderLife($("life"),lives);
+  setTimeout(nextStep,650);
+}
 
-    function renderQuestion(){
-      locked=false;
-      $("questionNumber").textContent = `Domanda ${current+1} di 3`;
-      renderLife($("life"),lives);
-      const q=questions[current];
-      $("options").innerHTML="";
-      q.options.forEach(opt=>{
-        const b=document.createElement("button");
-        b.className="option";
-        b.textContent=opt;
-        b.onclick=()=>answer(opt,b);
-        $("options").appendChild(b);
-      });
-    }
+function answer(opt,btn){
+  if(locked)return; locked=true;clearInterval(timerId);
+  const q=questions[current],correct=opt===q.answer;
+  if(!correct){lives=Math.max(0,lives-1);btn.classList.add("wrong")}
+  [...document.querySelectorAll(".option")].forEach(b=>{
+    if(b.textContent===q.answer)b.classList.add("correct");b.disabled=true;
+  });
+  renderLife($("life"),lives);
+  setTimeout(nextStep,650);
+}
 
-    function answer(opt,btn){
-      if(locked) return;
-      locked=true;
-      const q=questions[current];
-      const all=[...document.querySelectorAll(".option")];
-      const correct=opt===q.answer;
-      if(!correct){ lives=Math.max(0,lives-1); btn.classList.add("wrong"); }
-      all.forEach(b=>{ if(b.textContent===q.answer) b.classList.add("correct"); b.disabled=true; });
-      renderLife($("life"),lives);
-      setTimeout(()=>{
-        if(lives===0){ finish(false); return; }
-        if(current===2){ finish(true); return; }
-        current++; renderQuestion();
-      },760);
-    }
+function nextStep(){
+  if(lives===0){finish(false);return}
+  if(current===4){finish(true);return}
+  current++;renderQuestion();
+}
 
-    function finish(completed){
-      show("result");
-      renderLife($("lifeResult"),lives);
-      const m=$("resultMascot");
-      if(completed){
-        $("resultTitle").textContent="Coyote salvo!";
-        $("resultSub").textContent="Hai completato le 3 domande";
-        m.classList.remove("gameover");
-        m.classList.add("happy");
-        $("resultNote").textContent = lives===3 ? "Perfetto: nessuna vita persa." :
-          lives===2 ? "Un errore, ma il coyote è ancora sorridente." :
-          "Salvo per un pelo: resta solo 1/3 di vita.";
-      }else{
-        $("resultTitle").textContent="Game Over";
-        $("resultSub").textContent="Hai sbagliato tutte e 3 le risposte";
-        m.classList.add("gameover");
-        m.classList.remove("happy");
-        $("resultNote").textContent="Tre errori: il coyote ha esaurito tutta la vita.";
-      }
-    }
+function finish(completed){
+  clearInterval(timerId);show("result");renderLife($("lifeResult"),lives);
+  if(completed){
+    $("resultTitle").textContent="Sfida completata!";
+    $("resultSub").textContent=`Hai finito 5 domande con ${lives}/3 vite`;
+    $("resultNote").textContent=lives===3?"Perfetto: nessun errore.":lives===2?"Molto bene: un solo errore.":"Salva per un soffio: una sola vita rimasta.";
+  }else{
+    $("resultTitle").textContent="Game Over";
+    $("resultSub").textContent="Hai perso 3/3 vite";
+    $("resultNote").textContent="Tre errori (o tre timeout): il coyote è ko.";
+  }
+}
 
-    $("startBtn").onclick=start;
-    $("retryBtn").onclick=start;
-    $("homeBtn").onclick=()=>show("home");
-    $("backBtn").onclick=()=>show("home");
-    $("refreshBtn").onclick=loadDailyWords;
+$("startBtn").onclick=startGame;
+$("retryBtn").onclick=async()=>{await loadQuestions();startGame()};
+$("homeBtn").onclick=()=>show("home");
+$("backBtn").onclick=()=>{clearInterval(timerId);show("home")};
+$("refreshBtn").onclick=loadQuestions;
 
-    if("serviceWorker" in navigator){
-      window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-    }
-    loadDailyWords();
-  </script>
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+loadQuestions();
+</script>
 </body>
 </html>
