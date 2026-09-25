@@ -104,7 +104,7 @@
   <div class="stats">
     <div class="stat"><div class="ico">📰</div><strong>5</strong><span>domande</span></div>
     <div class="stat"><div class="ico">☷</div><strong>5</strong><span>opzioni</span></div>
-    <div class="stat"><div class="ico">⏱️</div><strong>3</strong><span>secondi</span></div>
+    <div class="stat"><div class="ico">⏱️</div><strong>4</strong><span>secondi</span></div>
     <div class="stat"><div class="ico">❤️</div><strong>⅓</strong><span>vita/errore</span></div>
   </div>
 
@@ -119,7 +119,7 @@
   <div class="topbar">
     <button id="backBtn" class="round">‹</button>
     <h2 id="qnum">Domanda 1 di 5</h2>
-    <div id="timer" class="timer">3.0</div>
+    <div id="timer" class="timer">4.0</div>
   </div>
 
   <div class="quiz-art-wrap">
@@ -161,13 +161,39 @@ const FEEDS=[
 ];
 
 const FALLBACK=[
- "internazionalizzazione","decarbonizzazione","ricapitalizzazione","regolamentazione",
- "digitalizzazione","industrializzazione","infrastrutturazione","riorganizzazione",
- "sottocapitalizzazione","specializzazione","razionalizzazione","liberalizzazione",
- "globalizzazione","privatizzazione","commercializzazione","modernizzazione",
- "ristrutturazione","programmazione","diversificazione","sostenibilita",
- "competitivita","produttivita","obbligazionario","macroeconomia","geopolitica"
+ "azionario","obbligazionario","obbligazione","inflazione","deflazione","disinflazione",
+ "recessione","espansione","crescita","produttivita","competitivita","investimenti",
+ "finanziamenti","capitalizzazione","ricapitalizzazione","indebitamento","rendimento",
+ "rendimenti","volatilita","liquidita","solvibilita","redditivita","profittabilita",
+ "valutazione","rivalutazione","svalutazione","diversificazione","correlazione",
+ "allocazione","duration","scadenza","emissione","collocamento","sottoscrizione",
+ "rimborso","dividendo","cedola","spread","default","rating","leverage","margine",
+ "ricavi","utile","bilancio","fatturato","deficit","debito","imposte","tassazione",
+ "occupazione","disoccupazione","salari","consumi","risparmio","esportazioni",
+ "importazioni","manifattura","produzione","industria","servizi","domanda","offerta",
+ "monetaria","fiscale","restrittiva","espansiva","credito","prestiti","mutui",
+ "depositi","banche","intermediari","assicurazioni","assicurativo","previdenza",
+ "pensioni","cambio","valuta","dollaro","sterlina","finanziario","finanziaria",
+ "economia","mercati","borsa","azioni","titoli","tassi","prezzi","fondi","riserva"
 ];
+
+const ECON_FINANCE_STEMS=[
+ "azion","obblig","inflaz","deflaz","disinflaz","recession","espansion","cresc",
+ "produttiv","competitiv","invest","finanzi","capital","indebit","rendiment",
+ "volatil","liquid","solvibil","reddit","profitt","valut","rivalut","svalut",
+ "diversific","correl","allocaz","duration","scadenz","emission","colloc",
+ "sottoscr","rimbors","dividend","cedol","spread","default","rating","leverage",
+ "margin","ricav","utile","utili","bilanc","fatturat","deficit","debit","impost",
+ "tassaz","occupaz","disoccupaz","salari","consum","risparmi","esport","import",
+ "manifatt","produzion","industr","serviz","domand","offert","monetar","fiscal",
+ "restritt","espansiv","credit","prestit","mutu","deposit","banc","intermediar",
+ "assicur","previd","pension","cambio","valut","dollar","sterlin","econom",
+ "mercat","bors","titoli","tassi","prezzi","fond"
+];
+
+function isEconomyFinanceWord(w){
+  return ECON_FINANCE_STEMS.some(stem=>w.startsWith(stem));
+}
 
 const STOP=new Set(["della","delle","dello","degli","dalla","dalle","dallo","dagli","nella","nelle","nello","negli","sulla","sulle","sullo","sugli","anche","come","sono","dopo","prima","contro","senza","verso","questo","questa","questi","queste","quello","quella","quelli","perche","mentre","dove","quando","oltre","ancora","molto","tutti","tutte","nuovo","nuova","anni","oggi","ieri","domani","italia","italiano","italiana","sole","euro","milioni","miliardi","secondo","parte","primo"]);
 
@@ -260,7 +286,12 @@ function extractWords(titles){
   for(const t of titles){
     const words=normalize(t).match(/[a-z]+/g)||[];
     for(const w of words){
-      if(w.length>=6 && w.length<=22 && !STOP.has(w)) out.push(w);
+      if(
+        w.length>=6 &&
+        w.length<=22 &&
+        !STOP.has(w) &&
+        isEconomyFinanceWord(w)
+      ) out.push(w);
     }
   }
   return [...new Set(out)];
@@ -268,7 +299,7 @@ function extractWords(titles){
 
 async function loadQuestions(){
   $("startBtn").disabled=true;
-  $("status").textContent="Pesco parole casuali dai titoli del Sole 24 Ore…";
+  $("status").textContent="Pesco parole di economia e finanza dai titoli del Sole 24 Ore…";
   try{
     const settled=await Promise.allSettled(FEEDS.map(async u=>parseRSS(await fetchText(u))));
     const items=settled.filter(x=>x.status==="fulfilled").flatMap(x=>x.value);
@@ -277,10 +308,10 @@ async function loadQuestions(){
     if(built.length<5) built=buildQuestions([...words,...FALLBACK],5);
     if(built.length<5) throw new Error("few");
     questions=built;
-    $("status").textContent="5 sfide nuove pronte ✓";
+    $("status").textContent="5 sfide di economia e finanza pronte ✓";
   }catch(e){
     questions=fallbackQuestions();
-    $("status").textContent="Feed momentaneamente non disponibile: uso parole demo";
+    $("status").textContent="Feed momentaneamente non disponibile: uso termini economico-finanziari";
   }
   $("startBtn").disabled=false;
 }
@@ -299,7 +330,7 @@ function renderQuestion(){
     const b=document.createElement("button");
     b.className="option";b.textContent=opt;b.onclick=()=>answer(opt,b,false);$("options").appendChild(b);
   });
-  deadline=performance.now()+3000;
+  deadline=performance.now()+4000;
   updateTimer();
   timerId=setInterval(updateTimer,50);
 }
@@ -319,7 +350,7 @@ function timeoutAnswer(){
     b.disabled=true;
   });
   renderLife($("life"),lives);
-  // A 3 secondi la domanda sparisce quasi subito: ritmo rapido, una vita persa.
+  // A 4 secondi la domanda scade: una vita persa e si passa rapidamente alla successiva.
   setTimeout(nextStep,220);
 }
 
