@@ -34,50 +34,25 @@
     .screen{display:none;min-height:calc(100svh - 30px);flex-direction:column}
     .screen.active{display:flex;animation:fade .2s ease}
     @keyframes fade{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
-
     .brand{font-family:Georgia,serif;font-weight:900;font-size:45px;line-height:1;text-align:center;color:#2d1208;margin-top:10px}
     .brand b{color:#f3a400}
     .subtitle{text-align:center;color:#2d1208;font-weight:750;margin-top:8px}
     .desert-card{
-      margin:16px 0 8px;border-radius:28px;overflow:hidden;position:relative;min-height:330px;
+      margin:16px 0 8px;border-radius:28px;overflow:hidden;position:relative;min-height:340px;
       box-shadow:0 20px 45px rgba(0,0,0,.25); border:2px solid rgba(255,255,255,.3);
       background:
+        radial-gradient(circle at 83% 16%, rgba(255,230,120,.95) 0 7%, transparent 8%),
         linear-gradient(170deg,transparent 0 47%,#d85e32 48% 59%,transparent 60%),
         linear-gradient(15deg,transparent 0 52%,#b4472d 53% 65%,transparent 66%),
         linear-gradient(#8edbff 0 55%,#eab04e 55% 100%);
+      display:flex; align-items:flex-end; justify-content:center;
     }
-    .sun{position:absolute;right:28px;top:24px;width:64px;height:64px;border-radius:50%;background:#ffe56c;box-shadow:0 0 35px rgba(255,229,108,.65)}
-    .mesa{position:absolute;left:-20px;bottom:88px;width:210px;height:80px;background:#bd5736;clip-path:polygon(0 100%,15% 42%,28% 42%,36% 10%,67% 10%,73% 49%,100% 49%,100% 100%)}
-    .mesa.m2{left:auto;right:-8px;width:170px;height:95px;background:#ce6b3d;transform:scaleX(-1)}
-    .ground{position:absolute;left:0;right:0;bottom:0;height:110px;background:#e8ad4b}
-    .mailbox{
-      position:absolute;right:26px;bottom:86px;width:128px;height:82px;background:#f9f4e9;border:4px solid #2e1a11;border-radius:42px 42px 10px 10px;
+    .hero-art{
+      width:min(100%, 350px);
+      display:block;
+      filter:drop-shadow(0 16px 20px rgba(0,0,0,.25));
+      margin-bottom:6px;
     }
-    .mailbox:after{content:"COYOTE";position:absolute;left:22px;top:32px;font-family:Georgia,serif;font-weight:900;color:#1f120c;font-size:19px}
-    .maildoor{position:absolute;right:-2px;bottom:-55px;width:82px;height:54px;background:#f9f4e9;border:4px solid #2e1a11;border-top:0;border-radius:0 0 14px 14px;transform:skewY(-8deg)}
-    .post{position:absolute;right:79px;bottom:-100px;width:21px;height:104px;background:#4b2a19}
-    .flag{position:absolute;right:4px;top:-52px;width:8px;height:58px;background:#2e1a11}
-    .flag:after{content:"";position:absolute;left:0;top:0;width:36px;height:25px;background:#e22a26;border:3px solid #2e1a11;border-radius:3px}
-    .coyote{
-      position:absolute;left:24px;bottom:45px;width:205px;height:245px;filter:drop-shadow(0 10px 7px rgba(0,0,0,.25));
-    }
-    .ear{position:absolute;top:1px;width:50px;height:98px;background:#a65e30;border:5px solid #412313;border-radius:75% 15% 70% 20%;z-index:1}
-    .ear:after{content:"";position:absolute;inset:12px 10px 22px;background:#efac8a;border-radius:70% 15% 70% 20%}
-    .ear.l{left:43px;transform:rotate(-12deg)} .ear.r{right:40px;transform:scaleX(-1) rotate(-12deg)}
-    .head{position:absolute;left:40px;top:58px;width:145px;height:130px;background:#a65e30;border:5px solid #412313;border-radius:47%;z-index:3}
-    .cream{position:absolute;left:36px;top:69px;width:95px;height:52px;background:#f4d2a3;border-radius:52%;z-index:5}
-    .nose{position:absolute;right:-13px;top:9px;width:34px;height:29px;border-radius:50%;background:#111;box-shadow:inset 6px 4px 0 rgba(255,255,255,.15)}
-    .eye{position:absolute;top:29px;width:44px;height:58px;border-radius:50%;background:#ffe44e;border:4px solid #412313;z-index:6}
-    .eye.l{left:25px}.eye.r{right:24px}.pupil{position:absolute;left:19px;top:24px;width:8px;height:13px;background:#18100c;border-radius:50%}
-    .brow{position:absolute;top:22px;width:40px;height:8px;border-radius:50%;background:#342015;z-index:7}
-    .brow.l{left:20px;transform:rotate(-9deg)} .brow.r{right:20px;transform:rotate(9deg)}
-    .smile{position:absolute;left:47px;top:94px;width:75px;height:28px;border-bottom:7px solid #4a2313;border-radius:0 0 70% 70%;z-index:8}
-    .body{position:absolute;left:70px;top:173px;width:72px;height:70px;background:#9a562d;border:5px solid #412313;border-radius:45% 45% 24% 24%;z-index:2}
-    .chest{position:absolute;left:19px;top:5px;width:33px;height:58px;background:#f1ce9a;border-radius:50%;z-index:3}
-    .arm{position:absolute;width:65px;height:17px;background:#9a562d;border:4px solid #412313;border-radius:20px;z-index:4}
-    .arm.left{left:29px;top:184px;transform:rotate(125deg)} .arm.right{right:3px;top:175px;transform:rotate(8deg)}
-    .leg{position:absolute;width:18px;height:70px;background:#9a562d;border:4px solid #412313;border-radius:20px;top:211px;z-index:1}
-    .leg.l{left:72px;transform:rotate(11deg)} .leg.r{left:118px;transform:rotate(-8deg)}
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}
     .stat{background:rgba(255,243,216,.96);color:#271006;border-radius:18px;padding:10px 5px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.18)}
     .stat strong{display:block;font-size:22px}.stat span{font-size:10px;font-weight:750}.stat .ico{font-size:19px}
@@ -89,7 +64,8 @@
     .round{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(60,24,8,.45);color:#fff1d2;font-size:22px}
     .timer{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900;color:#fff1d2;background:#2d150a;border:6px solid var(--gold);justify-self:end}
     .timer.danger{border-color:#ef4444;color:#fff}
-    .quiz-coyote{position:relative;margin:2px auto -4px;width:130px;height:120px;transform:scale(.65);transform-origin:center bottom}
+    .quiz-art-wrap{text-align:center;margin:2px 0 2px}
+    .quiz-art{width:min(100%,300px);max-height:190px;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.22))}
     .life{margin:0 auto 11px;background:rgba(43,17,6,.84);border-radius:999px;padding:9px 16px;display:flex;gap:10px;align-items:center;width:max-content;font-weight:800}
     .heart{font-size:23px}.heart.off{opacity:.25;filter:grayscale(1)}
     .question{background:rgba(255,242,211,.97);color:#241006;border-radius:28px;padding:17px 15px;box-shadow:0 16px 35px rgba(0,0,0,.25)}
@@ -98,15 +74,18 @@
     .option.correct{background:rgba(52,168,107,.28);border-color:#34a86b}
     .option.wrong{background:rgba(238,75,75,.22);border-color:#ee4b4b}
     .option:disabled{opacity:1}
-    .result-title{font-family:Georgia,serif;text-align:center;font-size:48px;margin:58px 0 6px}
+    .result-title{font-family:Georgia,serif;text-align:center;font-size:48px;margin:44px 0 6px}
     .result-sub{text-align:center;font-size:20px;font-weight:800;color:rgba(255,241,210,.85)}
-    .result-coyote{position:relative;height:270px;transform:rotate(85deg) scale(.86);margin:0 auto -10px;width:205px}
+    .result-art-wrap{text-align:center;margin:8px 0 -10px}
+    .result-art{width:min(100%,330px);max-height:265px;object-fit:contain;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24))}
     .result-note{text-align:center;font-weight:800;margin:8px 14px 18px;line-height:1.35}
     .spacer{flex:1}
     .tiny{text-align:center;font-size:10px;color:rgba(255,241,210,.55);margin-top:7px}
     @media(max-height:730px){
-      .desert-card{min-height:275px}.coyote{transform:scale(.83);transform-origin:left bottom}
-      .stats{margin:5px 0}.stat{padding:7px 4px}.result-title{margin-top:30px}
+      .desert-card{min-height:290px}
+      .hero-art{width:min(100%,300px)}
+      .quiz-art{max-height:150px}
+      .result-title{margin-top:22px}
       .question h1{font-size:27px}.option{min-height:44px;margin:5px 0}
     }
   </style>
@@ -119,18 +98,7 @@
   <div class="subtitle">Le parole più lunghe del giorno</div>
 
   <div class="desert-card">
-    <div class="sun"></div><div class="mesa"></div><div class="mesa m2"></div><div class="ground"></div>
-    <div class="mailbox"><div class="maildoor"></div><div class="post"></div><div class="flag"></div></div>
-    <div class="coyote">
-      <div class="ear l"></div><div class="ear r"></div>
-      <div class="head">
-        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
-        <div class="brow l"></div><div class="brow r"></div>
-        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
-      </div>
-      <div class="body"><div class="chest"></div></div><div class="arm left"></div><div class="arm right"></div>
-      <div class="leg l"></div><div class="leg r"></div>
-    </div>
+    <img src="coyote-home.png" alt="Coyote sorridente" class="hero-art">
   </div>
 
   <div class="stats">
@@ -154,15 +122,8 @@
     <div id="timer" class="timer">3.0</div>
   </div>
 
-  <div class="quiz-coyote">
-    <div class="coyote">
-      <div class="ear l"></div><div class="ear r"></div>
-      <div class="head">
-        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
-        <div class="brow l"></div><div class="brow r"></div>
-        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
-      </div><div class="body"><div class="chest"></div></div>
-    </div>
+  <div class="quiz-art-wrap">
+    <img src="coyote-quiz.png" alt="Coyote del quiz" class="quiz-art">
   </div>
 
   <div id="life" class="life"></div>
@@ -177,15 +138,8 @@
   <div id="resultTitle" class="result-title">Game Over</div>
   <div id="resultSub" class="result-sub"></div>
 
-  <div class="result-coyote">
-    <div class="coyote">
-      <div class="ear l"></div><div class="ear r"></div>
-      <div class="head">
-        <div class="eye l"><div class="pupil"></div></div><div class="eye r"><div class="pupil"></div></div>
-        <div class="brow l"></div><div class="brow r"></div>
-        <div class="cream"><div class="nose"></div></div><div class="smile"></div>
-      </div><div class="body"><div class="chest"></div></div>
-    </div>
+  <div class="result-art-wrap">
+    <img src="coyote-gameover.png" alt="Coyote game over" class="result-art">
   </div>
 
   <div id="lifeResult" class="life"></div>
