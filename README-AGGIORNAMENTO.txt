@@ -1,25 +1,26 @@
-PAROLONE 24 v3 - con coyote illustrati
+PAROLONE 24 v4 - livelli
 
-Sostituisce i coyote stilizzati con 3 PNG:
-- coyote-home.png
-- coyote-quiz.png
-- coyote-gameover.png
+Novità:
+- 3 livelli successivi
+- Livello 1: coyote base
+- Livello 2: coyote benestante, sportivo, con golf
+- Livello 3: coyote molto ricco, in giacca e cravatta con champagne
+- Alla fine: reward screen con cascata di monete d'oro
+- Gioco più facile:
+  * 3 domande per livello
+  * 4 opzioni
+  * 8 secondi
+  * 3 vite che si resettano a ogni livello
+  * opzioni volutamente più facili
 
 Per aggiornare GitHub:
-1. Apri il repository parolone24
-2. Add file -> Upload files
-3. Carica e sostituisci:
-   - index.html
-   - sw.js
-   - manifest.webmanifest
-   - coyote-home.png
-   - coyote-quiz.png
-   - coyote-gameover.png
-4. Commit changes
+1. Add file -> Upload files
+2. Carica e sostituisci TUTTI i file dello zip
+3. Commit changes
 
-Poi su iPhone:
+Se l'iPhone mostra ancora la versione vecchia:
 - chiudi l'app
-- se resta la vecchia, elimina l'icona
-- apri il link GitHub Pages in Safari
+- elimina l'icona
+- apri il sito in Safari
 - ricarica
-- Condividi -> Aggiungi alla schermata Home
+- Aggiungi di nuovo alla schermata Home

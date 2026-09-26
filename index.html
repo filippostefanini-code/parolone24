@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#271006" />
+  <meta name="theme-color" content="#2a1208" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Parolone 24" />
@@ -12,81 +12,89 @@
   <title>Parolone 24</title>
   <style>
     :root{
-      --cream:#fff1d2; --gold:#ffb01b; --gold2:#ffd36d; --ink:#241006;
-      --brown:#4e2410; --sky:#8fdcff; --red:#ee4b4b; --green:#34a86b;
+      --cream:#fff3da; --gold:#ffb21d; --gold2:#ffd874; --ink:#2c1409; --dark:#4b220f;
+      --glass:rgba(255,255,255,.12); --red:#ef5350; --green:#3aa86f;
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
     body{
-      color:var(--cream); min-height:100svh; overflow-x:hidden;
-      background:linear-gradient(#8fdcff 0 28%,#f3a34e 28% 53%,#8d3f1f 53% 100%);
+      min-height:100svh;color:var(--cream);
+      background:
+        radial-gradient(circle at 15% 10%,rgba(255,255,255,.18),transparent 18%),
+        radial-gradient(circle at 85% 15%,rgba(255,214,106,.22),transparent 18%),
+        linear-gradient(180deg,#8bd8ff 0 32%,#e7a453 32% 57%,#6f3118 57% 100%);
     }
     button{font:inherit}
     .app{
-      width:min(100%,520px); min-height:100svh; margin:auto;
+      width:min(100%,520px); margin:0 auto; min-height:100svh;
       padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 18px);
+      display:flex; flex-direction:column;
+    }
+    .screen{display:none;min-height:calc(100svh - 28px);flex-direction:column}
+    .screen.active{display:flex;animation:fade .22s ease}
+    @keyframes fade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .brand{font-family:Georgia,serif;font-weight:900;font-size:45px;text-align:center;line-height:1;color:#2d1208;margin-top:8px}
+    .brand b{color:#f3a100}
+    .subtitle{text-align:center;color:#2d1208;font-weight:800;margin-top:7px}
+    .hero-card,.reward-card{
+      margin:16px 0 10px;border-radius:28px;overflow:hidden;min-height:315px;display:flex;align-items:flex-end;justify-content:center;
+      box-shadow:0 20px 45px rgba(0,0,0,.22); border:2px solid rgba(255,255,255,.26);
       background:
-        radial-gradient(ellipse at 18% 28%,rgba(255,255,255,.95) 0 7%,transparent 7.4%),
-        radial-gradient(ellipse at 31% 25%,rgba(255,255,255,.9) 0 5%,transparent 5.4%),
-        radial-gradient(ellipse at 84% 18%,rgba(255,255,255,.9) 0 6%,transparent 6.4%),
-        linear-gradient(to bottom,rgba(143,220,255,.96) 0 34%,rgba(238,156,69,.97) 34% 54%,rgba(72,30,13,.99) 54%);
+        radial-gradient(circle at 80% 14%,rgba(255,230,110,.96) 0 8%,transparent 8.4%),
+        linear-gradient(170deg,transparent 0 47%,#d96033 48% 60%,transparent 61%),
+        linear-gradient(15deg,transparent 0 54%,#b2462d 55% 66%,transparent 67%),
+        linear-gradient(#8edbff 0 55%,#ebb14f 55% 100%);
     }
-    .screen{display:none;min-height:calc(100svh - 30px);flex-direction:column}
-    .screen.active{display:flex;animation:fade .2s ease}
-    @keyframes fade{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
-    .brand{font-family:Georgia,serif;font-weight:900;font-size:45px;line-height:1;text-align:center;color:#2d1208;margin-top:10px}
-    .brand b{color:#f3a400}
-    .subtitle{text-align:center;color:#2d1208;font-weight:750;margin-top:8px}
-    .desert-card{
-      margin:16px 0 8px;border-radius:28px;overflow:hidden;position:relative;min-height:340px;
-      box-shadow:0 20px 45px rgba(0,0,0,.25); border:2px solid rgba(255,255,255,.3);
-      background:
-        radial-gradient(circle at 83% 16%, rgba(255,230,120,.95) 0 7%, transparent 8%),
-        linear-gradient(170deg,transparent 0 47%,#d85e32 48% 59%,transparent 60%),
-        linear-gradient(15deg,transparent 0 52%,#b4472d 53% 65%,transparent 66%),
-        linear-gradient(#8edbff 0 55%,#eab04e 55% 100%);
-      display:flex; align-items:flex-end; justify-content:center;
-    }
-    .hero-art{
-      width:min(100%, 350px);
-      display:block;
-      filter:drop-shadow(0 16px 20px rgba(0,0,0,.25));
-      margin-bottom:6px;
-    }
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}
-    .stat{background:rgba(255,243,216,.96);color:#271006;border-radius:18px;padding:10px 5px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.18)}
-    .stat strong{display:block;font-size:22px}.stat span{font-size:10px;font-weight:750}.stat .ico{font-size:19px}
-    .primary{border:0;width:100%;border-radius:999px;background:linear-gradient(var(--gold2),var(--gold));color:#251006;font-size:20px;font-weight:900;padding:17px 20px;box-shadow:0 12px 25px rgba(0,0,0,.18)}
-    .secondary{border:0;background:transparent;color:#fff1d2;padding:11px;font-weight:750}
-    .status{text-align:center;font-size:12px;color:rgba(255,241,210,.8);min-height:16px;margin:9px 0}
-    .topbar{display:grid;grid-template-columns:44px 1fr 78px;align-items:center;color:#fff1d2;margin-top:5px}
+    .reward-card{background:
+        radial-gradient(circle at 80% 14%,rgba(255,230,110,.96) 0 8%,transparent 8.4%),
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.22),transparent 12%),
+        linear-gradient(#4f230e 0 100%);
+      align-items:center}
+    .hero-art{width:min(100%,345px);display:block;filter:drop-shadow(0 16px 20px rgba(0,0,0,.25));margin-bottom:4px}
+    .preview-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
+    .preview{background:rgba(255,244,220,.96);color:var(--ink);border-radius:18px;padding:10px 6px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,.15)}
+    .preview b{display:block;font-size:17px}
+    .preview span{font-size:10px;font-weight:800;line-height:1.25;display:block;margin-top:4px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+    .stat{background:rgba(255,244,220,.96);color:var(--ink);border-radius:18px;padding:10px 6px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+    .stat b{display:block;font-size:22px}.stat span{font-size:10px;font-weight:800;line-height:1.2}
+    .primary{border:0;width:100%;border-radius:999px;background:linear-gradient(var(--gold2),var(--gold));color:var(--ink);font-size:20px;font-weight:900;padding:17px 20px;box-shadow:0 12px 25px rgba(0,0,0,.18)}
+    .secondary{border:0;background:transparent;color:var(--cream);padding:11px;font-weight:800}
+    .status{text-align:center;font-size:12px;color:rgba(255,243,218,.85);min-height:16px;margin:9px 0}
+    .tiny{text-align:center;font-size:10px;color:rgba(255,243,218,.58);margin-top:6px}
+    .spacer{flex:1}
+
+    .topbar{display:grid;grid-template-columns:44px 1fr 78px;align-items:center;color:var(--cream);margin-top:5px}
     .topbar h2{text-align:center;font-family:Georgia,serif;font-size:19px;margin:0}
-    .round{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(60,24,8,.45);color:#fff1d2;font-size:22px}
-    .timer{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900;color:#fff1d2;background:#2d150a;border:6px solid var(--gold);justify-self:end}
-    .timer.danger{border-color:#ef4444;color:#fff}
-    .quiz-art-wrap{text-align:center;margin:2px 0 2px}
-    .quiz-art{width:min(100%,300px);max-height:190px;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.22))}
+    .round{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(60,24,8,.45);color:var(--cream);font-size:22px}
+    .timer{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900;color:#fff;background:#2d150a;border:6px solid var(--gold);justify-self:end}
+    .timer.danger{border-color:var(--red)}
+    .level-badge{text-align:center;font-size:14px;font-weight:900;letter-spacing:.3px;background:rgba(46,20,8,.78);padding:8px 14px;border-radius:999px;display:inline-block;margin:10px auto 8px}
+    .quiz-art-wrap,.result-art-wrap,.reward-art-wrap{text-align:center;margin:4px 0 4px}
+    .quiz-art,.result-art,.reward-art{width:min(100%,300px);max-height:190px;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.22))}
+    .reward-art{max-height:320px;width:min(100%,350px)}
     .life{margin:0 auto 11px;background:rgba(43,17,6,.84);border-radius:999px;padding:9px 16px;display:flex;gap:10px;align-items:center;width:max-content;font-weight:800}
     .heart{font-size:23px}.heart.off{opacity:.25;filter:grayscale(1)}
-    .question{background:rgba(255,242,211,.97);color:#241006;border-radius:28px;padding:17px 15px;box-shadow:0 16px 35px rgba(0,0,0,.25)}
+    .question{background:rgba(255,243,218,.97);color:var(--ink);border-radius:28px;padding:17px 15px;box-shadow:0 16px 35px rgba(0,0,0,.25)}
     .question h1{text-align:center;font-family:Georgia,serif;font-size:31px;line-height:1.05;margin:0 0 13px}
-    .option{width:100%;border:1px solid rgba(34,16,6,.18);background:rgba(255,255,255,.58);color:#241006;border-radius:999px;min-height:50px;margin:7px 0;padding:8px 11px;font-size:17px;font-weight:850}
-    .option.correct{background:rgba(52,168,107,.28);border-color:#34a86b}
-    .option.wrong{background:rgba(238,75,75,.22);border-color:#ee4b4b}
+    .option{width:100%;border:1px solid rgba(34,16,6,.16);background:rgba(255,255,255,.7);color:var(--ink);border-radius:999px;min-height:50px;margin:7px 0;padding:8px 11px;font-size:17px;font-weight:850}
+    .option.correct{background:rgba(58,168,111,.28);border-color:var(--green)}
+    .option.wrong{background:rgba(239,83,80,.22);border-color:var(--red)}
     .option:disabled{opacity:1}
-    .result-title{font-family:Georgia,serif;text-align:center;font-size:48px;margin:44px 0 6px}
-    .result-sub{text-align:center;font-size:20px;font-weight:800;color:rgba(255,241,210,.85)}
-    .result-art-wrap{text-align:center;margin:8px 0 -10px}
-    .result-art{width:min(100%,330px);max-height:265px;object-fit:contain;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24))}
+    .result-title{font-family:Georgia,serif;text-align:center;font-size:42px;margin:40px 0 6px}
+    .result-sub{text-align:center;font-size:20px;font-weight:800;color:rgba(255,243,218,.87)}
     .result-note{text-align:center;font-weight:800;margin:8px 14px 18px;line-height:1.35}
-    .spacer{flex:1}
-    .tiny{text-align:center;font-size:10px;color:rgba(255,241,210,.55);margin-top:7px}
-    @media(max-height:730px){
-      .desert-card{min-height:290px}
-      .hero-art{width:min(100%,300px)}
-      .quiz-art{max-height:150px}
-      .result-title{margin-top:22px}
-      .question h1{font-size:27px}.option{min-height:44px;margin:5px 0}
+    .reward-title{font-family:Georgia,serif;text-align:center;font-size:40px;margin:20px 0 8px}
+    .reward-note{text-align:center;font-size:20px;font-weight:800;color:rgba(255,243,218,.92);line-height:1.35}
+    .chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+    .chip{background:rgba(255,244,220,.95);color:var(--ink);padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900}
+    @media(max-height:740px){
+      .hero-card{min-height:280px}
+      .hero-art{width:min(100%,295px)}
+      .quiz-art,.result-art{max-height:145px}
+      .question h1{font-size:27px}
+      .option{min-height:44px;margin:5px 0}
+      .reward-art{max-height:255px}
     }
   </style>
 </head>
@@ -95,35 +103,43 @@
 
 <section id="home" class="screen active">
   <div class="brand">Parolone <b>24</b></div>
-  <div class="subtitle">Le parole più lunghe del giorno</div>
+  <div class="subtitle">Sfida a livelli del Coyote</div>
 
-  <div class="desert-card">
-    <img src="coyote-home.png" alt="Coyote sorridente" class="hero-art">
+  <div class="hero-card">
+    <img id="homeHero" src="coyote-level1.png" alt="Coyote livello 1" class="hero-art">
+  </div>
+
+  <div class="preview-levels">
+    <div class="preview"><b>Livello 1</b><span>Coyote base<br>nel deserto</span></div>
+    <div class="preview"><b>Livello 2</b><span>Coyote sportivo<br>con golf</span></div>
+    <div class="preview"><b>Livello 3</b><span>Coyote ricco<br>champagne</span></div>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="ico">📰</div><strong>5</strong><span>domande</span></div>
-    <div class="stat"><div class="ico">☷</div><strong>5</strong><span>opzioni</span></div>
-    <div class="stat"><div class="ico">⏱️</div><strong>4</strong><span>secondi</span></div>
-    <div class="stat"><div class="ico">❤️</div><strong>⅓</strong><span>vita/errore</span></div>
+    <div class="stat"><b>3</b><span>livelli</span></div>
+    <div class="stat"><b>3</b><span>domande<br>per livello</span></div>
+    <div class="stat"><b>4</b><span>opzioni</span></div>
+    <div class="stat"><b>8s</b><span>tempo facile</span></div>
   </div>
 
   <div class="spacer"></div>
-  <button id="startBtn" class="primary" disabled>Inizia la sfida →</button>
-  <div id="status" class="status">Cerco parole casuali nei titoli del Sole 24 Ore…</div>
-  <button id="refreshBtn" class="secondary">Cambia parole</button>
-  <div class="tiny">Prototipo personale non ufficiale. Fonte: titoli dei feed RSS pubblici de Il Sole 24 Ore.</div>
+  <button id="startBtn" class="primary" disabled>Inizia il livello 1 →</button>
+  <div id="status" class="status">Cerco le parole del giorno…</div>
+  <button id="refreshBtn" class="secondary">Aggiorna parole</button>
+  <div class="tiny">Ogni livello riparte con 3 vite, così è più facile salire.</div>
 </section>
 
 <section id="quiz" class="screen">
   <div class="topbar">
     <button id="backBtn" class="round">‹</button>
-    <h2 id="qnum">Domanda 1 di 5</h2>
-    <div id="timer" class="timer">4.0</div>
+    <h2 id="qnum">Domanda 1 di 3</h2>
+    <div id="timer" class="timer">8.0</div>
   </div>
 
+  <div id="levelBadge" class="level-badge">Livello 1 • Coyote base</div>
+
   <div class="quiz-art-wrap">
-    <img src="coyote-quiz.png" alt="Coyote del quiz" class="quiz-art">
+    <img id="quizArt" src="coyote-quiz.png" alt="Coyote quiz" class="quiz-art">
   </div>
 
   <div id="life" class="life"></div>
@@ -134,19 +150,58 @@
   <div class="spacer"></div>
 </section>
 
-<section id="result" class="screen">
-  <div id="resultTitle" class="result-title">Game Over</div>
-  <div id="resultSub" class="result-sub"></div>
+<section id="between" class="screen">
+  <div id="betweenTitle" class="result-title">Livello completato!</div>
+  <div id="betweenSub" class="result-sub">Hai sbloccato il livello successivo</div>
 
   <div class="result-art-wrap">
-    <img src="coyote-gameover.png" alt="Coyote game over" class="result-art">
+    <img id="betweenArt" src="coyote-level2.png" alt="Nuovo livello" class="result-art">
+  </div>
+
+  <div class="chips">
+    <div id="betweenChip1" class="chip">Più ricco</div>
+    <div id="betweenChip2" class="chip">Stile nuovo</div>
+    <div id="betweenChip3" class="chip">3 vite fresche</div>
+  </div>
+
+  <div id="betweenNote" class="result-note">Adesso il Coyote diventa benestante e sportivo.</div>
+  <div class="spacer"></div>
+  <button id="nextLevelBtn" class="primary">Vai al livello 2</button>
+  <button id="homeBtn1" class="secondary">Torna alla home</button>
+</section>
+
+<section id="gameover" class="screen">
+  <div class="result-title">Game Over</div>
+  <div class="result-sub">Il Coyote ha perso tutte le vite del livello</div>
+
+  <div class="result-art-wrap">
+    <img src="coyote-gameover.png" alt="Coyote KO" class="result-art">
   </div>
 
   <div id="lifeResult" class="life"></div>
-  <div id="resultNote" class="result-note"></div>
+  <div class="result-note">Niente paura: puoi riprovare dallo stesso livello.</div>
   <div class="spacer"></div>
-  <button id="retryBtn" class="primary">↻ Riprova con altre parole</button>
-  <button id="homeBtn" class="secondary">Torna alla home</button>
+  <button id="retryBtn" class="primary">↻ Riprova il livello</button>
+  <button id="homeBtn2" class="secondary">Torna alla home</button>
+</section>
+
+<section id="reward" class="screen">
+  <div class="reward-title">Hai vinto tutto!</div>
+  <div class="reward-note">Superati i 3 livelli:<br>ecco la cascata di monete d’oro ✨</div>
+
+  <div class="reward-card">
+    <img src="coyote-reward.png" alt="Coyote con monete d'oro" class="reward-art">
+  </div>
+
+  <div class="chips">
+    <div class="chip">Livello 1 ✓</div>
+    <div class="chip">Livello 2 ✓</div>
+    <div class="chip">Livello 3 ✓</div>
+  </div>
+
+  <div class="spacer"></div>
+  <button id="playAgainBtn" class="primary">Gioca di nuovo</button>
+  <button id="homeBtn3" class="secondary">Torna alla home</button>
 </section>
 
 </main>
@@ -161,108 +216,41 @@ const FEEDS=[
 ];
 
 const FALLBACK=[
- "azionario","obbligazionario","obbligazione","inflazione","deflazione","disinflazione",
- "recessione","espansione","crescita","produttivita","competitivita","investimenti",
- "finanziamenti","capitalizzazione","ricapitalizzazione","indebitamento","rendimento",
- "rendimenti","volatilita","liquidita","solvibilita","redditivita","profittabilita",
- "valutazione","rivalutazione","svalutazione","diversificazione","correlazione",
- "allocazione","duration","scadenza","emissione","collocamento","sottoscrizione",
- "rimborso","dividendo","cedola","spread","default","rating","leverage","margine",
- "ricavi","utile","bilancio","fatturato","deficit","debito","imposte","tassazione",
- "occupazione","disoccupazione","salari","consumi","risparmio","esportazioni",
- "importazioni","manifattura","produzione","industria","servizi","domanda","offerta",
- "monetaria","fiscale","restrittiva","espansiva","credito","prestiti","mutui",
- "depositi","banche","intermediari","assicurazioni","assicurativo","previdenza",
- "pensioni","cambio","valuta","dollaro","sterlina","finanziario","finanziaria",
- "economia","mercati","borsa","azioni","titoli","tassi","prezzi","fondi","riserva"
+ "internazionalizzazione","decarbonizzazione","ricapitalizzazione","regolamentazione",
+ "digitalizzazione","industrializzazione","riorganizzazione","specializzazione",
+ "globalizzazione","privatizzazione","commercializzazione","modernizzazione",
+ "programmazione","diversificazione","competitivita","produttivita",
+ "obbligazionario","macroeconomia","geopolitica","investimenti"
 ];
-
-const ECON_FINANCE_STEMS=[
- "azion","obblig","inflaz","deflaz","disinflaz","recession","espansion","cresc",
- "produttiv","competitiv","invest","finanzi","capital","indebit","rendiment",
- "volatil","liquid","solvibil","reddit","profitt","valut","rivalut","svalut",
- "diversific","correl","allocaz","duration","scadenz","emission","colloc",
- "sottoscr","rimbors","dividend","cedol","spread","default","rating","leverage",
- "margin","ricav","utile","utili","bilanc","fatturat","deficit","debit","impost",
- "tassaz","occupaz","disoccupaz","salari","consum","risparmi","esport","import",
- "manifatt","produzion","industr","serviz","domand","offert","monetar","fiscal",
- "restritt","espansiv","credit","prestit","mutu","deposit","banc","intermediar",
- "assicur","previd","pension","cambio","valut","dollar","sterlin","econom",
- "mercat","bors","titoli","tassi","prezzi","fond"
-];
-
-function isEconomyFinanceWord(w){
-  return ECON_FINANCE_STEMS.some(stem=>w.startsWith(stem));
-}
 
 const STOP=new Set(["della","delle","dello","degli","dalla","dalle","dallo","dagli","nella","nelle","nello","negli","sulla","sulle","sullo","sugli","anche","come","sono","dopo","prima","contro","senza","verso","questo","questa","questi","queste","quello","quella","quelli","perche","mentre","dove","quando","oltre","ancora","molto","tutti","tutte","nuovo","nuova","anni","oggi","ieri","domani","italia","italiano","italiana","sole","euro","milioni","miliardi","secondo","parte","primo"]);
 
-let questions=[],current=0,lives=3,locked=false,timerId=null,deadline=0;
+const LEVELS = [
+  {name:"Livello 1", title:"Coyote base", art:"coyote-level1.png"},
+  {name:"Livello 2", title:"Coyote sportivo", art:"coyote-level2.png"},
+  {name:"Livello 3", title:"Coyote ricco", art:"coyote-level3.png"}
+];
+
+let allQuestions = [];
+let currentLevel = 0;
+let currentQuestion = 0;
+let lives = 3;
+let timerId = null;
+let deadline = 0;
+let locked = false;
 
 const $=id=>document.getElementById(id);
 function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function pretty(w){return w.charAt(0).toUpperCase()+w.slice(1)}
 function renderLife(el,n){el.innerHTML='<b>Vite</b>'+[0,1,2].map(i=>`<span class="heart ${i<n?'':'off'}">♥</span>`).join('')}
-
 function normalize(w){return w.toLocaleLowerCase("it-IT").normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
-
-function makeRealWordQuestion(pool,used){
-  const available=shuffle(pool.filter(w=>!used.has(w)));
-  // Prima prova parole quasi della stessa lunghezza: rende il colpo d'occhio difficile,
-  // senza usare finte variazioni della stessa parola.
-  for(const maxGap of [1,2,3]){
-    for(const answer of available){
-      const distractors=shuffle(available.filter(w=>
-        w!==answer && w.length<answer.length && (answer.length-w.length)<=maxGap
-      ));
-      if(distractors.length>=4){
-        const chosen=[answer,...distractors.slice(0,4)];
-        chosen.forEach(w=>used.add(w));
-        return {
-          answer:pretty(answer),
-          options:shuffle(chosen.map(pretty))
-        };
-      }
-    }
-  }
-  return null;
-}
-
-function buildQuestions(words,count=5){
-  const pool=[...new Set(words.map(normalize))]
-    .filter(w=>/^[a-z]+$/.test(w) && w.length>=6 && w.length<=22 && !STOP.has(w));
-
-  // Più tentativi perché ogni partita usi 25 parole diverse, quando il feed lo consente.
-  for(let attempt=0;attempt<40;attempt++){
-    const used=new Set(),out=[];
-    const mixed=shuffle(pool);
-    for(let i=0;i<count;i++){
-      const q=makeRealWordQuestion(mixed,used);
-      if(!q)break;
-      out.push(q);
-    }
-    if(out.length===count)return out;
-  }
-  return [];
-}
-
-function fallbackQuestions(){
-  let q=buildQuestions(FALLBACK,5);
-  if(q.length===5)return q;
-  // Ultima rete di sicurezza: può riutilizzare parole tra domande, ma mai dentro la stessa domanda.
-  return Array.from({length:5},()=>{
-    const used=new Set();
-    return makeRealWordQuestion(FALLBACK,used);
-  }).filter(Boolean);
-}
 
 function parseRSS(text){
   const doc=new DOMParser().parseFromString(text,"text/xml");
   if(doc.querySelector("parsererror")) throw new Error("rss");
   return [...doc.querySelectorAll("item")].map(i=>({
-    title:i.querySelector("title")?.textContent?.trim()||"",
-    date:i.querySelector("pubDate")?.textContent?.trim()||""
+    title:i.querySelector("title")?.textContent?.trim()||""
   })).filter(x=>x.title);
 }
 
@@ -286,112 +274,172 @@ function extractWords(titles){
   for(const t of titles){
     const words=normalize(t).match(/[a-z]+/g)||[];
     for(const w of words){
-      if(
-        w.length>=6 &&
-        w.length<=22 &&
-        !STOP.has(w) &&
-        isEconomyFinanceWord(w)
-      ) out.push(w);
+      if(w.length>=8 && w.length<=22 && !STOP.has(w)) out.push(w);
     }
   }
   return [...new Set(out)];
 }
 
+function makeEasyQuestion(answer, pool){
+  const shorter = shuffle(pool.filter(w => w !== answer && w.length <= answer.length - 2));
+  let options = [answer, ...shorter.slice(0,3)];
+  if(options.length < 4){
+    const fallback = shuffle(FALLBACK.filter(w => w !== answer && w.length <= answer.length - 2));
+    options = [answer, ...shorter, ...fallback].slice(0,4);
+  }
+  return {answer:pretty(answer), options:shuffle(options.map(pretty))};
+}
+
+function buildQuestions(words){
+  const sorted = [...new Set(words)].sort((a,b)=>b.length-a.length || a.localeCompare(b));
+  const selected = shuffle(sorted.slice(0,18)).slice(0,9);
+  return selected.map(w => makeEasyQuestion(w, sorted)).slice(0,9);
+}
+
 async function loadQuestions(){
   $("startBtn").disabled=true;
-  $("status").textContent="Pesco parole di economia e finanza dai titoli del Sole 24 Ore…";
+  $("status").textContent="Cerco parole facili del giorno…";
   try{
     const settled=await Promise.allSettled(FEEDS.map(async u=>parseRSS(await fetchText(u))));
     const items=settled.filter(x=>x.status==="fulfilled").flatMap(x=>x.value);
     const words=extractWords(items.map(x=>x.title));
-    let built=buildQuestions(words,5);
-    if(built.length<5) built=buildQuestions([...words,...FALLBACK],5);
-    if(built.length<5) throw new Error("few");
-    questions=built;
-    $("status").textContent="5 sfide di economia e finanza pronte ✓";
+    if(words.length<12) throw new Error("few");
+    allQuestions = buildQuestions(words);
+    if(allQuestions.length < 9) throw new Error("few");
+    $("status").textContent="Parole pronte ✓";
   }catch(e){
-    questions=fallbackQuestions();
-    $("status").textContent="Feed momentaneamente non disponibile: uso termini economico-finanziari";
+    allQuestions = buildQuestions(FALLBACK);
+    $("status").textContent="Feed non disponibile: uso parole demo";
   }
   $("startBtn").disabled=false;
 }
 
-function startGame(){
-  clearInterval(timerId);current=0;lives=3;locked=false;show("quiz");renderQuestion();
+function questionsForLevel(levelIndex){
+  const start = levelIndex*3;
+  return allQuestions.slice(start,start+3);
+}
+
+function refreshHomeHero(){
+  $("homeHero").src = LEVELS[currentLevel].art;
+  $("startBtn").textContent = `Inizia il ${LEVELS[currentLevel].name.toLowerCase()} →`;
+}
+
+function startLevel(levelIndex){
+  clearInterval(timerId);
+  currentLevel = levelIndex;
+  currentQuestion = 0;
+  lives = 3; // easier: reset each level
+  locked = false;
+  renderQuestion();
+  show("quiz");
 }
 
 function renderQuestion(){
-  clearInterval(timerId);locked=false;
-  $("qnum").textContent=`Domanda ${current+1} di 5`;
-  renderLife($("life"),lives);
-  const q=questions[current];
-  $("options").innerHTML="";
+  clearInterval(timerId);
+  locked = false;
+  const level = LEVELS[currentLevel];
+  const set = questionsForLevel(currentLevel);
+  const q = set[currentQuestion];
+  $("qnum").textContent = `Domanda ${currentQuestion+1} di 3`;
+  $("levelBadge").textContent = `${level.name} • ${level.title}`;
+  $("quizArt").src = level.art;
+  renderLife($("life"), lives);
+  $("options").innerHTML = "";
   q.options.forEach(opt=>{
     const b=document.createElement("button");
-    b.className="option";b.textContent=opt;b.onclick=()=>answer(opt,b,false);$("options").appendChild(b);
+    b.className="option";
+    b.textContent=opt;
+    b.onclick=()=>answer(opt,b);
+    $("options").appendChild(b);
   });
-  deadline=performance.now()+4000;
+  deadline = performance.now() + 8000;
   updateTimer();
-  timerId=setInterval(updateTimer,50);
+  timerId = setInterval(updateTimer, 50);
 }
 
 function updateTimer(){
-  const remaining=Math.max(0,deadline-performance.now());
-  $("timer").textContent=(remaining/1000).toFixed(1);
-  $("timer").classList.toggle("danger",remaining<1000);
-  if(remaining<=0){clearInterval(timerId);timeoutAnswer()}
+  const remaining = Math.max(0, deadline - performance.now());
+  $("timer").textContent = (remaining/1000).toFixed(1);
+  $("timer").classList.toggle("danger", remaining < 2500);
+  if(remaining <= 0){ clearInterval(timerId); timeoutAnswer(); }
 }
 
 function timeoutAnswer(){
-  if(locked)return; locked=true; lives=Math.max(0,lives-1);
-  const q=questions[current];
-  [...document.querySelectorAll(".option")].forEach(b=>{
-    if(b.textContent===q.answer)b.classList.add("correct");
-    b.disabled=true;
-  });
-  renderLife($("life"),lives);
-  // A 4 secondi la domanda scade: una vita persa e si passa rapidamente alla successiva.
-  setTimeout(nextStep,220);
+  if(locked) return;
+  locked = true;
+  lives = Math.max(0, lives-1);
+  revealCorrect();
+  renderLife($("life"), lives);
+  setTimeout(nextStep, 800);
 }
 
-function answer(opt,btn){
-  if(locked)return; locked=true;clearInterval(timerId);
-  const q=questions[current],correct=opt===q.answer;
-  if(!correct){lives=Math.max(0,lives-1);btn.classList.add("wrong")}
+function answer(opt, btn){
+  if(locked) return;
+  locked = true;
+  clearInterval(timerId);
+  const q = questionsForLevel(currentLevel)[currentQuestion];
+  if(opt !== q.answer){
+    lives = Math.max(0, lives-1);
+    btn.classList.add("wrong");
+  }
+  revealCorrect();
+  renderLife($("life"), lives);
+  setTimeout(nextStep, 800);
+}
+
+function revealCorrect(){
+  const q = questionsForLevel(currentLevel)[currentQuestion];
   [...document.querySelectorAll(".option")].forEach(b=>{
-    if(b.textContent===q.answer)b.classList.add("correct");b.disabled=true;
+    if(b.textContent===q.answer) b.classList.add("correct");
+    b.disabled = true;
   });
-  renderLife($("life"),lives);
-  setTimeout(nextStep,450);
 }
 
 function nextStep(){
-  if(lives===0){finish(false);return}
-  if(current===4){finish(true);return}
-  current++;renderQuestion();
+  if(lives === 0){ finishLevel(false); return; }
+  if(currentQuestion === 2){ finishLevel(true); return; }
+  currentQuestion++;
+  renderQuestion();
 }
 
-function finish(completed){
-  clearInterval(timerId);show("result");renderLife($("lifeResult"),lives);
-  if(completed){
-    $("resultTitle").textContent="Sfida completata!";
-    $("resultSub").textContent=`Hai finito 5 domande con ${lives}/3 vite`;
-    $("resultNote").textContent=lives===3?"Perfetto: nessun errore.":lives===2?"Molto bene: un solo errore.":"Salva per un soffio: una sola vita rimasta.";
-  }else{
-    $("resultTitle").textContent="Game Over";
-    $("resultSub").textContent="Hai perso 3/3 vite";
-    $("resultNote").textContent="Tre errori (o tre timeout): il coyote è ko.";
+function finishLevel(success){
+  clearInterval(timerId);
+  if(!success){
+    renderLife($("lifeResult"), lives);
+    show("gameover");
+    return;
+  }
+  if(currentLevel < 2){
+    const next = currentLevel + 1;
+    $("betweenTitle").textContent = `${LEVELS[currentLevel].name} completato!`;
+    $("betweenSub").textContent = `Hai sbloccato ${LEVELS[next].name}`;
+    $("betweenArt").src = LEVELS[next].art;
+    $("betweenChip1").textContent = next===1 ? "Coyote benestante" : "Coyote molto ricco";
+    $("betweenChip2").textContent = next===1 ? "Golf e look sportivo" : "Giacca, cravatta, champagne";
+    $("betweenChip3").textContent = "3 vite fresche";
+    $("betweenNote").textContent = next===1
+      ? "Adesso il Coyote diventa benestante, sportivo e gira con le mazze da golf."
+      : "Adesso il Coyote diventa molto ricco, in giacca e cravatta, con un calice di champagne.";
+    $("nextLevelBtn").textContent = `Vai al ${LEVELS[next].name.toLowerCase()}`;
+    show("between");
+  } else {
+    show("reward");
   }
 }
 
-$("startBtn").onclick=startGame;
-$("retryBtn").onclick=async()=>{await loadQuestions();startGame()};
-$("homeBtn").onclick=()=>show("home");
-$("backBtn").onclick=()=>{clearInterval(timerId);show("home")};
-$("refreshBtn").onclick=loadQuestions;
+$("startBtn").onclick = ()=>startLevel(0);
+$("refreshBtn").onclick = loadQuestions;
+$("backBtn").onclick = ()=>{ clearInterval(timerId); show("home"); };
+$("homeBtn1").onclick = $("homeBtn2").onclick = $("homeBtn3").onclick = ()=>show("home");
+$("nextLevelBtn").onclick = ()=>startLevel(currentLevel + 1);
+$("retryBtn").onclick = ()=>startLevel(currentLevel);
+$("playAgainBtn").onclick = async()=>{ await loadQuestions(); startLevel(0); };
 
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-loadQuestions();
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+
+loadQuestions().then(refreshHomeHero);
 </script>
 </body>
 </html>
